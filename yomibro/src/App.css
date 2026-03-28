@@ -21,7 +21,7 @@
 
 .t2 { /* English */
     background-color: #e5eef5;
-    padding: 24px;
+    padding: 12px;
     border-radius: 5px;
     font-family: Arial, sans-serif;
     font-size: 1.3em;
@@ -51,7 +51,7 @@
 
 .breakdown-table {
     margin-top: 10px;
-    max-width: 650px;
+    width: 100%;
     border: 1px solid #ccc;
     border-collapse: collapse;
 }
@@ -69,12 +69,12 @@
 
 .note {
     margin-top: 10px;
-    max-width: 650px;
+    width: 100%;
 }
 
 .word-by-word {
     margin-top: 10px;
-    max-width: 650px;
+    width: 100%;
 }
 
 .pinyin rt {
@@ -101,4 +101,8 @@
 
 .copy-button:hover {
     background-color: #0056b3;
+}
+
+.copy-button.success {
+    background-color: #28a745;
 }

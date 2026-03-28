@@ -12,6 +12,7 @@ function App() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
     const [lastProcessedText, setLastProcessedText] = useState<string>('')
+    const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
     useEffect(() => {
         // Load settings from storage
@@ -106,7 +107,7 @@ function App() {
     };
 
     return (
-        <div style={{padding: '16px', width: '90%', minHeight: '100px'}}>
+        <div style={{padding: '16px', boxSizing: 'border-box'}}>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <h1 style={{margin: 0}}>Yomibro</h1>
                 <button
@@ -186,7 +187,7 @@ function App() {
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                 <h3>Analysis:</h3>
                                 <button
-                                    className="copy-button"
+                                    className={`copy-button ${copyStatus === 'success' ? 'success' : ''}`}
                                     onClick={() => {
                                         const element = document.querySelector('.t2.text_size') as HTMLElement;
                                         if (element) {
@@ -194,18 +195,23 @@ function App() {
                                                 .then((blob) => {
                                                     if (blob) {
                                                         const item = new ClipboardItem({ 'image/png': blob });
-                                                        navigator.clipboard.write([item]);
+                                                        return navigator.clipboard.write([item]);
                                                     }
                                                 })
+                                                .then(() => {
+                                                    setCopyStatus('success');
+                                                    setTimeout(() => setCopyStatus('idle'), 2000);
+                                                })
                                                 .catch((err) => {
-                                                    alert('oops, something went wrong!' + err);
+                                                    setCopyStatus('error');
+                                                    setTimeout(() => setCopyStatus('idle'), 2000);
                                                     console.error('oops, something went wrong!', err);
                                                 });
                                         }
                                     }}
                                     title="Copy Analysis as Image"
                                 >
-                                    📋 Copy
+                                    {copyStatus === 'success' ? '✅ Copied!' : copyStatus === 'error' ? '❌ Error' : '📋 Copy'}
                                 </button>
                             </div>
                             <AnalysisView response={llmResponse}/>
