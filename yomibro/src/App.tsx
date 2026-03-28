@@ -50,6 +50,11 @@ function App() {
             return;
         }
 
+        if (!prompt.includes('{{text}}')) {
+            setError('Error: Prompt must contain the {{text}} placeholder.');
+            return;
+        }
+
         setIsLoading(true);
         setError('');
 
@@ -62,8 +67,9 @@ function App() {
             const fullPrompt = prompt.replace('{{text}}', text);
 
             const response = await openai.chat.completions.create({
-                model: 'gpt-4o-mini', // Lightweight and fast
+                model: 'gpt-4o-mini',
                 messages: [{ role: 'user', content: fullPrompt }],
+                response_format: { type: 'json_object' }
             });
 
             const content = response.choices[0]?.message?.content || '';
