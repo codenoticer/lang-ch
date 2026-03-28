@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import OpenAI from 'openai'
+import { toBlob } from 'html-to-image'
 import './App.css'
 
 function App() {
@@ -182,7 +183,31 @@ function App() {
 
                     {llmResponse && !isLoading && (
                         <div>
-                            <h3>Analysis:</h3>
+                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <h3>Analysis:</h3>
+                                <button
+                                    className="copy-button"
+                                    onClick={() => {
+                                        const element = document.querySelector('.t2.text_size') as HTMLElement;
+                                        if (element) {
+                                            toBlob(element, { cacheBust: true })
+                                                .then((blob) => {
+                                                    if (blob) {
+                                                        const item = new ClipboardItem({ 'image/png': blob });
+                                                        navigator.clipboard.write([item]);
+                                                    }
+                                                })
+                                                .catch((err) => {
+                                                    alert('oops, something went wrong!' + err);
+                                                    console.error('oops, something went wrong!', err);
+                                                });
+                                        }
+                                    }}
+                                    title="Copy Analysis as Image"
+                                >
+                                    📋 Copy
+                                </button>
+                            </div>
                             <AnalysisView response={llmResponse}/>
                         </div>
                     )}
@@ -209,7 +234,7 @@ function AnalysisView({response}: { response: string }) {
         const data: AnalysisData = JSON.parse(response);
         return (
             <div className="t2 text_size">
-                <span className="english">{data.mandarin} {data.english}</span>
+                <span className="english">{data.mandarin}<br/>{data.english}</span>
                 <table className="breakdown-table">
                     <tbody>
                     {data.breakdown.map((item, index) => (
