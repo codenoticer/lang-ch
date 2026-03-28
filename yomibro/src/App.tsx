@@ -95,7 +95,7 @@ function App() {
 
     // Trigger LLM call when selectedText changes and is different from lastProcessedText
     useEffect(() => {
-        if (selectedText && selectedText !== lastProcessedText && !isLoading && !isConfigOpen) {
+        if (selectedText && selectedText.trim() !== lastProcessedText.trim() && !isLoading && !isConfigOpen) {
             fetchFromLLM(selectedText);
         }
     }, [selectedText, lastProcessedText, isConfigOpen]);
