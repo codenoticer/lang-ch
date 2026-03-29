@@ -173,3 +173,80 @@ This is only needed if you make changes to the card format in Yomitan. Just impo
   ```
 
   
+
+# Yomibro
+
+
+
+## Build & install
+
+Just run this. The files will be compiled in the `dist/` folder.
+
+```
+bun run build
+```
+
+Then in Chrome, under Manage Extension > Load unpacked (in developer mode), select the `dist/` folder.
+
+Whenever you make code changes, you need to reload the extension via the circle arrow thingy in Manage Extensions.
+
+
+
+## Prompt
+
+````
+Translate the given text in `<text>` and give a breakdown and explanations.
+Format your response as a JSON object with the exact structure specified below.
+The JSON must include a component breakdown with short explanations and a note explaining important concepts in the sentence.
+Especially make sure to explain grammatical concepts.
+Also include a word-by-word translation in the format `让 (Let) 我们 (us) 吃 (eat) 午饭 (lunch).`.
+
+IMPORTANT:
+- Make sure to replicate the JSON structure precisely with all specified fields in the given order.
+- When you discover compounds like verb-object compounds, add the base word to the explanation.
+- The explanations are for English speakers. If you find notable concepts in the sentence, then always explain them.
+
+Example input:
+```
+小奶牛也到处找。
+```
+
+
+Expected output JSON structure:
+```json
+{
+    "mandarin": "飞机很快就看不见了。",
+    "english": "The airplane soon went out of sight.",
+    "breakdown": [
+        {
+            "term": "飞机",
+            "pinyin": "fēijī",
+            "explanation": "\"airplane.\""
+        },
+        {
+            "term": "很快",
+            "pinyin": "hěn kuài",
+            "explanation": "Adverbial phrase meaning \"very quickly\" or \"soon.\" 很 (very) + 快 (fast)."
+        },
+        {
+            "term": "就",
+            "pinyin": "jiù",
+            "explanation": "Here means \"soon\" or \"then,\" indicating the action happened earlier or quicker than expected; often follows time expressions or words like 很快 to show immediacy."
+        },
+        {
+            "term": "看不见了",
+            "pinyin": "kàn bu jiàn le",
+            "explanation": "Phrase meaning \"could not be seen anymore.\" 看不见 (kàn bu jiàn) is a potential complement indicating inability to see, and 了 (le) marks a change of state."
+        }
+    ],
+    "note": "\"很快\" is a compound of 很 (very) + 快 (fast), together meaning \"soon/quickly.\" \"就\" indicates something happens sooner than expected; when it follows words like 很快, it emphasizes immediacy. The structure \"看 + 不 + result\" (e.g., 看不见) is a potential complement expressing inability to achieve the result. The final particle \"了\" marks the new state.",
+    "word_by_word": "飞机 (The airplane) 很快 (very soon) 就 (then/soon) 看不见了 (could not be seen anymore)."
+}
+```
+
+<text>
+{{text}}
+</text>
+
+````
+
