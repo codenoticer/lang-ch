@@ -136,7 +136,7 @@ anki
 
   
 
-## AnkiConnect Settings
+## Anki / AnkiConnect Settings
 
 You need to configure how AnkiConnect exports data from the webpage into Anki by configuring the "Anki card format" in Yomitan. Settings > Anki > Configure Anki card format
 
@@ -151,12 +151,13 @@ This is only needed if you make changes to the card format in Yomitan. Just impo
   ```
   sentence: {furigana}
   display: {furigana}<br><br>{sentence}
-  notes: {glossary}<br>Sentence:<br>{sentence}
+  notes: <br>{clipboard-image}<br>{glossary}<br>Sentence:<br>{sentence}
   source: {clipboard-image}<br>{document-title}<br>{url}
   mp3: {audio}
   data: {}
   ```
   
+  - There is also `{url}` but it messes up the view on Netflix where they have long URLs. Removed.
   
 
 ## UberVocab
@@ -221,22 +222,22 @@ Expected output JSON structure:
         {
             "term": "飞机",
             "pinyin": "fēijī",
-            "explanation": "\"airplane.\""
+            "explanation": "\"airplane\""
         },
         {
             "term": "很快",
             "pinyin": "hěn kuài",
-            "explanation": "Adverbial phrase meaning \"very quickly\" or \"soon.\" 很 (very) + 快 (fast)."
+            "explanation": "Adverbial phrase meaning \"very quickly\" or \"soon\", 很 (very) + 快 (fast)"
         },
         {
             "term": "就",
             "pinyin": "jiù",
-            "explanation": "Here means \"soon\" or \"then,\" indicating the action happened earlier or quicker than expected; often follows time expressions or words like 很快 to show immediacy."
+            "explanation": "In this case, 就 means \"soon\" or \"then\", indicating the action happened earlier or quicker than expected; often follows time expressions or words like 很快 to show immediacy."
         },
         {
             "term": "看不见了",
             "pinyin": "kàn bu jiàn le",
-            "explanation": "Phrase meaning \"could not be seen anymore.\" 看不见 (kàn bu jiàn) is a potential complement indicating inability to see, and 了 (le) marks a change of state."
+            "explanation": "Phrase meaning \"could not be seen anymore\" 看不见 (kàn bu jiàn) is a potential complement indicating inability to see, and 了 (le) marks a change of state."
         }
     ],
     "note": "\"很快\" is a compound of 很 (very) + 快 (fast), together meaning \"soon/quickly.\" \"就\" indicates something happens sooner than expected; when it follows words like 很快, it emphasizes immediacy. The structure \"看 + 不 + result\" (e.g., 看不见) is a potential complement expressing inability to achieve the result. The final particle \"了\" marks the new state.",
@@ -247,6 +248,5 @@ Expected output JSON structure:
 <text>
 {{text}}
 </text>
-
 ````
 

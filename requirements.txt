@@ -8,6 +8,6 @@ pydantic==1.10.7
 Pygments==2.14.0
 requests==2.28.2
 soupsieve==2.4
-typing_extensions==4.5.0
+typing_extensions>=4.15.0
 urllib3==1.26.15
 azure-cognitiveservices-speech==1.30.0

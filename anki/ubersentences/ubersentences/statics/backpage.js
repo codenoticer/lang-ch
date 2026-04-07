@@ -436,18 +436,18 @@ function renderHighlights() {
 /*********************************************************************************/
 
 function renderOptions() {
-    var jQuerySelection = $('#options');
-    renderReplayButton(jQuerySelection);
+    // var jQuerySelection = $('#options');
+    // renderReplayButton(jQuerySelection);
     // renderHighLightButton(jQuerySelection); // never used
-    renderJishoButton(jQuerySelection);
-    renderTranslateButton(jQuerySelection);
-    renderVocabButton(jQuerySelection);
-    renderGrammarButton(jQuerySelection);
-    renderMailToButton(jQuerySelection);
+    // renderJishoButton(jQuerySelection);
+    // renderTranslateButton(jQuerySelection);
+    // renderVocabButton(jQuerySelection);
+    // renderGrammarButton(jQuerySelection);
+    // renderMailToButton(jQuerySelection);
     // renderSourceButton(jQuerySelection); // rendered explicitly at the bottom
-    renderGoogleTranslateButton(jQuerySelection);
-    renderAnalysisButton(jQuerySelection);
-    renderMnemonicsButton(jQuerySelection);
+    // renderGoogleTranslateButton(jQuerySelection);
+    // renderAnalysisButton(jQuerySelection);
+    // renderMnemonicsButton(jQuerySelection);
 }
 
 function renderVocabButton(jQuerySelection) {
