@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Yomibro Hello",
-  "version": "1.0.0",
-  "description": "My first Chrome extension",
+  "name": "Yomibro",
+  "version": "0.1.2",
+  "description": "",
   "action": {
     "default_popup": "index.html"
   },

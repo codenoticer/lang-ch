@@ -70,13 +70,14 @@ function App() {
 
             const fullPrompt = prompt.replace('{{text}}', text);
 
-            const response = await openai.chat.completions.create({
-                model: 'gpt-4o-mini',
-                messages: [{role: 'user', content: fullPrompt}],
-                response_format: {type: 'json_object'}
+            const response = await openai.responses.create({
+                model: 'gpt-5.5',
+                reasoning: { effort: 'none' }, // 'low', 'none'
+                input: [{role: 'user', content: fullPrompt}],
+                text: { format: { type: 'json_object' } }
             });
 
-            const content = response.choices[0]?.message?.content || '';
+            const content = response.output_text || '';
             setLlmResponse(content);
             setLastProcessedText(text);
 
