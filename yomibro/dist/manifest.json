@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Yomibro",
+  "version": "0.1.2",
+  "description": "",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.openai.com/*"
+  ]
+}

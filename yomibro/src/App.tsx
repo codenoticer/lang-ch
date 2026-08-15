@@ -71,8 +71,8 @@ function App() {
             const fullPrompt = prompt.replace('{{text}}', text);
 
             const response = await openai.responses.create({
-                model: 'gpt-5.5',
-                reasoning: { effort: 'none' }, // 'low', 'none'
+                model: 'gpt-5.6-luna',
+                reasoning: { effort: 'medium' }, // 'low', 'none'
                 input: [{role: 'user', content: fullPrompt}],
                 text: { format: { type: 'json_object' } }
             });
