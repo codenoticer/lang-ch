@@ -72,7 +72,7 @@ function App() {
 
             const response = await openai.responses.create({
                 model: 'gpt-5.6-luna',
-                service_tier: 'priority',
+                service_tier: 'priority', // 2x the price
                 reasoning: { effort: 'medium' }, // 'low', 'none'
                 input: [{role: 'user', content: fullPrompt}],
                 text: { format: { type: 'json_object' } }
