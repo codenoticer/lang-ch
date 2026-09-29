@@ -1,0 +1,93 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // ------------------------------------------------------------------------------------------------
+  // PLUGINS
+  // ------------------------------------------------------------------------------------------------
+  "plugin": [],
+
+
+  // ------------------------------------------------------------------------------------------------
+  // MCP SERVERS
+  // All MCP servers should be disabled by default. They can be enabled mid-session via `/mcp`.
+  // ------------------------------------------------------------------------------------------------
+  "mcp": {
+    "intellij": {
+      "enabled": false, // Eats >11k tokens, can be enabled mid-session via `/mcp`
+      "type": "remote",
+      "url": "http://127.0.0.1:64342/stream"
+    }
+  },
+
+  // ------------------------------------------------------------------------------------------------
+  // PERMISSIONS
+  // ------------------------------------------------------------------------------------------------
+  "permission": {
+
+    "external_directory": {
+      "*": "ask", // Everything outside the working dir
+      "/tamscape/chronicle_*/**": "allow" // todo we probably should replace this with an ENV variable
+    },
+
+    "bash": {
+      // Whitelists don't work well for Bash (e.g. `find` has `-exec`), so we allow all in working dir but ask for common edit commands
+      "*": "allow", // Will be blocked for `external_directory`
+      "touch *": "ask",
+      "mkdir *": "ask",
+      "rm *": "ask", // Stuff like `find . -name IMPORTANT_FILE -delete` still works
+      "cp *": "ask",
+      "mv *": "ask",
+      "dd *": "ask",
+      "sudo *": "ask",
+      "chmod *": "ask",
+      "chown *": "ask",
+      "curl *": "ask",
+      "wget *": "ask",
+      "bun install *": "ask",
+      "npm install *": "ask",
+      "pnpm install *": "ask",
+      "pip install *": "ask",
+      "git push": "ask",
+      "git reset --hard *": "ask",
+      "git clean *": "ask",
+      "reboot": "ask",
+      "shutdown": "ask",
+      "kill *": "ask",
+      "killall *": "ask",
+      "docker *": "ask",
+      "mkfs *": "ask",
+      "fdisk *": "ask",
+      "parted *": "ask",
+      "format *": "ask",
+      "git branch -d *": "ask",
+      "git branch -D *": "ask",
+      "git rebase *": "ask",
+      "npm run publish": "ask",
+      "brew install *": "ask",
+      "brew upgrade *": "ask",
+      "ssh *": "ask",
+      "scp *": "ask",
+      "rsync *": "ask"
+    },
+
+    "glob": "allow",
+    "grep": "allow",
+    "read": "allow",
+    "lsp": "allow",
+    "skill": "allow",
+    "question": "allow",
+    "webfetch": "allow",
+    "websearch": "allow",
+
+    "edit": "ask",
+    "task": {
+      // Selectors match subagent names; the last matching rule wins. Details: https://opencode.ai/docs/agents/#task-permissions
+      "*": "ask",
+      "explore-*": "allow",
+      "general-*": "allow",
+      "java-test-runner": "allow"
+    },
+
+    "doom_loop": "deny" // "triggered when the same tool call repeats 3 times with identical input" - No idea what this is for
+  }
+}

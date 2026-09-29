@@ -6,6 +6,7 @@ import './App.css'
 function App() {
     const [selectedText, setSelectedText] = useState<string>('')
     const [apiKey, setApiKey] = useState<string>('')
+    const [model, setModel] = useState<string>('gpt-5.6-luna')
     const [prompt, setPrompt] = useState<string>(`Placeholder`)
     const [isConfigOpen, setIsConfigOpen] = useState<boolean>(false)
     const [llmResponse, setLlmResponse] = useState<string>('')
@@ -16,10 +17,11 @@ function App() {
 
     useEffect(() => {
         // Load settings from storage
-        chrome.storage.local.get(['apiKey', 'prompt', 'lastProcessedText', 'llmResponse'], (result: {
+        chrome.storage.local.get(['apiKey', 'model', 'prompt', 'lastProcessedText', 'llmResponse'], (result: {
             [key: string]: any
         }) => {
             if (typeof result.apiKey === 'string') setApiKey(result.apiKey);
+            if (typeof result.model === 'string') setModel(result.model);
             if (typeof result.prompt === 'string') setPrompt(result.prompt);
             if (typeof result.lastProcessedText === 'string') setLastProcessedText(result.lastProcessedText);
             if (typeof result.llmResponse === 'string') setLlmResponse(result.llmResponse);
@@ -54,6 +56,11 @@ function App() {
             return;
         }
 
+        if (!model.trim()) {
+            setError('Please set your OpenAI model in settings.');
+            return;
+        }
+
         if (!prompt.includes('{{text}}')) {
             setError('Error: Prompt must contain the {{text}} placeholder.');
             return;
@@ -71,7 +78,7 @@ function App() {
             const fullPrompt = prompt.replace('{{text}}', text);
 
             const response = await openai.responses.create({
-                model: 'gpt-5.6-luna',
+                model: model.trim(),
                 service_tier: 'priority', // 2x the price
                 reasoning: { effort: 'medium' }, // 'low', 'none'
                 input: [{role: 'user', content: fullPrompt}],
@@ -103,7 +110,7 @@ function App() {
     }, [selectedText, lastProcessedText, isConfigOpen]);
 
     const handleSave = () => {
-        chrome.storage.local.set({apiKey, prompt}, () => {
+        chrome.storage.local.set({apiKey, model: model.trim(), prompt}, () => {
             setIsConfigOpen(false);
         });
     };
@@ -129,6 +136,17 @@ function App() {
                             type="password"
                             value={apiKey}
                             onChange={(e) => setApiKey(e.target.value)}
+                            style={{width: '100%', padding: '4px', boxSizing: 'border-box'}}
+                        />
+                    </div>
+                    <div style={{marginBottom: '12px'}}>
+                        <label htmlFor="model" style={{display: 'block', marginBottom: '4px'}}>OpenAI Model:</label>
+                        <input
+                            id="model"
+                            type="text"
+                            value={model}
+                            onChange={(e) => setModel(e.target.value)}
+                            placeholder="gpt-6-luna"
                             style={{width: '100%', padding: '4px', boxSizing: 'border-box'}}
                         />
                     </div>
